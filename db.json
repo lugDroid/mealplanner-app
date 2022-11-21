@@ -11,8 +11,8 @@
       "id": 2,
       "name": "Agency",
       "group": "A",
-      "timeOfDay": "Lunch",
-      "numberOfDays": 1
+      "timeOfDay": "Dinner",
+      "numberOfDays": 2
     },
     {
       "id": 3,
@@ -26,13 +26,13 @@
       "name": "Atmosphere",
       "group": "A",
       "timeOfDay": "Lunch",
-      "numberOfDays": 1
+      "numberOfDays": 2
     },
     {
       "id": 5,
       "name": "Argument",
       "group": "A",
-      "timeOfDay": "Lunch",
+      "timeOfDay": "Dinner",
       "numberOfDays": 1
     },
     {
@@ -40,7 +40,7 @@
       "name": "Broken",
       "group": "B",
       "timeOfDay": "Lunch",
-      "numberOfDays": 1
+      "numberOfDays": 3
     },
     {
       "id": 7,
@@ -54,7 +54,7 @@
       "name": "Belong",
       "group": "B",
       "timeOfDay": "Lunch",
-      "numberOfDays": 1
+      "numberOfDays": 2
     },
     {
       "id": 9,
@@ -67,7 +67,7 @@
       "id": 10,
       "name": "Beautiful",
       "group": "B",
-      "timeOfDay": "Lunch",
+      "timeOfDay": "Dinner",
       "numberOfDays": 1
     },
     {
@@ -75,20 +75,20 @@
       "name": "Customer",
       "group": "C",
       "timeOfDay": "Lunch",
-      "numberOfDays": 1
+      "numberOfDays": 3
     },
     {
       "id": 12,
       "name": "Center",
       "group": "C",
-      "timeOfDay": "Lunch",
-      "numberOfDays": 1
+      "timeOfDay": "Dinner",
+      "numberOfDays": 2
     },
     {
       "id": 13,
       "name": "Cousin",
       "group": "C",
-      "timeOfDay": "Lunch",
+      "timeOfDay": "Dinner",
       "numberOfDays": 1
     },
     {

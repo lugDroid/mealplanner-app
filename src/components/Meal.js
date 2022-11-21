@@ -1,6 +1,6 @@
 const Meal = ({ meal }) => {
   return (
-    <li key={meal.id}>
+    <li>
       <h4>{meal.name}</h4>
       <p>Group: {meal.group}</p>
       <p>Time of Day: {meal.timeOfDay}</p>

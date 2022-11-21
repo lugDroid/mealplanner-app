@@ -1,94 +1,109 @@
 {
   "meals": [
     {
+      "id": 1,
       "name": "Area",
       "group": "A",
-      "time-of-day": "Lunch",
-      "number-of-days": 1
+      "timeOfDay": "Lunch",
+      "numberOfDays": 1
     },
     {
+      "id": 2,
       "name": "Agency",
       "group": "A",
-      "time-of-day": "Lunch",
-      "number-of-days": 1
+      "timeOfDay": "Lunch",
+      "numberOfDays": 1
     },
     {
+      "id": 3,
       "name": "Abandon",
       "group": "A",
-      "time-of-day": "Lunch",
-      "number-of-days": 1
+      "timeOfDay": "Lunch",
+      "numberOfDays": 1
     },
     {
+      "id": 4,
       "name": "Atmosphere",
       "group": "A",
-      "time-of-day": "Lunch",
-      "number-of-days": 1
+      "timeOfDay": "Lunch",
+      "numberOfDays": 1
     },
     {
+      "id": 5,
       "name": "Argument",
       "group": "A",
-      "time-of-day": "Lunch",
-      "number-of-days": 1
+      "timeOfDay": "Lunch",
+      "numberOfDays": 1
     },
     {
+      "id": 6,
       "name": "Broken",
       "group": "B",
-      "time-of-day": "Lunch",
-      "number-of-days": 1
+      "timeOfDay": "Lunch",
+      "numberOfDays": 1
     },
     {
+      "id": 7,
       "name": "Battlefield",
       "group": "B",
-      "time-of-day": "Lunch",
-      "number-of-days": 1
+      "timeOfDay": "Lunch",
+      "numberOfDays": 1
     },
     {
+      "id": 8,
       "name": "Belong",
       "group": "B",
-      "time-of-day": "Lunch",
-      "number-of-days": 1
+      "timeOfDay": "Lunch",
+      "numberOfDays": 1
     },
     {
+      "id": 9,
       "name": "Bomb",
       "group": "B",
-      "time-of-day": "Lunch",
-      "number-of-days": 1
+      "timeOfDay": "Lunch",
+      "numberOfDays": 1
     },
     {
+      "id": 10,
       "name": "Beautiful",
       "group": "B",
-      "time-of-day": "Lunch",
-      "number-of-days": 1
+      "timeOfDay": "Lunch",
+      "numberOfDays": 1
     },
     {
+      "id": 11,
       "name": "Customer",
       "group": "C",
-      "time-of-day": "Lunch",
-      "number-of-days": 1
+      "timeOfDay": "Lunch",
+      "numberOfDays": 1
     },
     {
+      "id": 12,
       "name": "Center",
       "group": "C",
-      "time-of-day": "Lunch",
-      "number-of-days": 1
+      "timeOfDay": "Lunch",
+      "numberOfDays": 1
     },
     {
+      "id": 13,
       "name": "Cousin",
       "group": "C",
-      "time-of-day": "Lunch",
-      "number-of-days": 1
+      "timeOfDay": "Lunch",
+      "numberOfDays": 1
     },
     {
+      "id": 14,
       "name": "Credit",
       "group": "C",
-      "time-of-day": "Lunch",
-      "number-of-days": 1
+      "timeOfDay": "Lunch",
+      "numberOfDays": 1
     },
     {
+      "id": 15,
       "name": "Compact",
       "group": "C",
-      "time-of-day": "Lunch",
-      "number-of-days": 1
+      "timeOfDay": "Lunch",
+      "numberOfDays": 1
     }
   ]
 }

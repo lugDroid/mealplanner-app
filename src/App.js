@@ -1,18 +1,20 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
 import Meal from "./components/Meal";
 import Filter from "./components/Filter";
+import MealForm from "./components/MealForm";
+import mealService from "./services/mealService";
 
 const App = () => {
-  const [meals, setMeals] = useState([]);
-  const [filter, setFilter] = useState("");
   const GROUP_FILTER = "Group:";
   const TIME_FILTER = "Time:";
   const DAYS_FILTER = "Days:";
 
+  const [meals, setMeals] = useState([]);
+  const [filter, setFilter] = useState("");
+
   useEffect(() => {
-    axios.get("http://localhost:3001/meals").then((res) => {
-      setMeals(res.data);
+    mealService.getAll().then((initialMeals) => {
+      setMeals(initialMeals);
     });
   }, []);
 
@@ -37,7 +39,7 @@ const App = () => {
           .toLocaleLowerCase()
           .trim();
 
-        return m.timeOfDay.toLocaleLowerCase() === filterText;
+        return m.timeOfDay.toLocaleLowerCase().includes(filterText);
       });
     } else if (filter.startsWith(DAYS_FILTER)) {
       return meals.filter((m) => {
@@ -59,6 +61,8 @@ const App = () => {
       <h1>Meal Planner</h1>
       <h2>Filter List</h2>
       <Filter value={filter} handleChange={handleFilterChange} />
+      <h2>Add New Meal</h2>
+      <MealForm meals={meals} setMeals={setMeals} />
       <h2>List of Meals</h2>
       <ul>
         {mealsToShow.map((m) => (

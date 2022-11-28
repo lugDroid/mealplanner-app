@@ -13,7 +13,7 @@ const App = () => {
   const [filter, setFilter] = useState("");
 
   useEffect(() => {
-    mealService.getAll().then((initialMeals) => {
+    mealService.getAllMeals().then((initialMeals) => {
       setMeals(initialMeals);
     });
   }, []);
@@ -54,6 +54,16 @@ const App = () => {
     );
   };
 
+  const deleteMeal = (id) => {
+    const meal = meals.find((m) => m.id === id);
+
+    if (window.confirm(`Delete ${meal.name}?`)) {
+      mealService.deleteMeal(id).then(() => {
+        mealService.getAllMeals().then((meals) => setMeals(meals));
+      });
+    }
+  };
+
   const mealsToShow = filter === "" ? meals : applyFilter(filter);
 
   return (
@@ -66,7 +76,7 @@ const App = () => {
       <h2>List of Meals</h2>
       <ul>
         {mealsToShow.map((m) => (
-          <Meal meal={m} key={m.id} />
+          <Meal meal={m} key={m.id} deleteMeal={deleteMeal} />
         ))}
       </ul>
     </div>

@@ -1,20 +1,26 @@
 import axios from "axios";
 const baseUrl = "http://localhost:3001/meals";
 
-const getAll = () => {
+const getAllMeals = () => {
   const request = axios.get(baseUrl);
 
   return request.then((res) => res.data);
 };
 
-const create = (newMeal) => {
+const createMeal = (newMeal) => {
   const request = axios.post(baseUrl, newMeal);
   return request.then((res) => res.data);
 };
 
+const deleteMeal = (id) => {
+  const req = axios.delete(`${baseUrl}/${id}`);
+  return req.then((res) => res.data);
+};
+
 const mealService = {
-  getAll,
-  create,
+  getAllMeals,
+  createMeal,
+  deleteMeal,
 };
 
 export default mealService;

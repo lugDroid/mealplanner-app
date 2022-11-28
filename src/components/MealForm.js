@@ -17,10 +17,10 @@ const MealForm = ({ meals, setMeals }) => {
       group: mealGroup,
       timeOfDay: mealTime,
       numberOfDays: numberOfDays,
-      id: meals.length + 1,
+      id: Math.max(meals.map((m) => m.id)) + 1,
     };
 
-    mealService.create(mealObj).then((returnedMeal) => {
+    mealService.createMeal(mealObj).then((returnedMeal) => {
       setMeals(meals.concat(returnedMeal));
       setMealName("");
       setMealGroup(GROUPS[0]);

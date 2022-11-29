@@ -1,4 +1,4 @@
-const Meal = ({ meal, deleteMeal, summaryView }) => {
+const Meal = ({ meal, deleteMeal, summaryView, showModify }) => {
   let details;
 
   if (summaryView) {
@@ -10,6 +10,7 @@ const Meal = ({ meal, deleteMeal, summaryView }) => {
         <p>Time of Day: {meal.timeOfDay}</p>
         <p>Number of Days: {meal.numberOfDays}</p>
         <div>
+          <button onClick={() => showModify(meal.id)}>Modify</button>
           <button onClick={() => deleteMeal(meal.id)}>Delete</button>
         </div>
       </>

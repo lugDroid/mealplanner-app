@@ -2,18 +2,19 @@ import { useState } from "react";
 import mealService from "../services/mealService";
 import MealList from "./MealList";
 import ModifyMeal from "./ModifyMeal";
+import MealForm from "./MealForm";
 
-const Content = ({ meals, setMeals, summaryView, mealsToShow }) => {
-  const [modifyView, setModifyView] = useState(false);
+const Content = ({ meals, setMeals }) => {
+  const [activeView, setActiveView] = useState("list");
   const [mealToModify, setMealToModify] = useState({});
 
-  const toggleModifyView = (id = 0) => {
-    setModifyView(!modifyView);
-
+  const showMealForm = (id) => {
     if (id) {
+      setActiveView("modify");
       const meal = meals.find((m) => m.id === id);
       setMealToModify(meal);
     } else {
+      setActiveView("new");
       setMealToModify({});
     }
   };
@@ -28,15 +29,24 @@ const Content = ({ meals, setMeals, summaryView, mealsToShow }) => {
     }
   };
 
-  if (modifyView) {
-    return <ModifyMeal closeView={toggleModifyView} meal={mealToModify} />;
+  if (activeView === "modify") {
+    return (
+      <ModifyMeal closeView={() => setActiveView("list")} meal={mealToModify} />
+    );
+  } else if (activeView === "new") {
+    return (
+      <MealForm
+        closeView={() => setActiveView("list")}
+        meals={meals}
+        setMeals={setMeals}
+      />
+    );
   } else {
     return (
       <MealList
-        mealsToShow={mealsToShow}
+        meals={meals}
         deleteMeal={deleteMeal}
-        summaryView={summaryView}
-        showModify={toggleModifyView}
+        showMealForm={showMealForm}
       />
     );
   }

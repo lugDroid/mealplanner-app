@@ -1,7 +1,7 @@
 import { useState } from "react";
 import mealService from "../services/mealService";
 
-const MealForm = ({ meals, setMeals }) => {
+const MealForm = ({ closeView, meals, setMeals }) => {
   const GROUPS = ["A", "B", "C"];
   const TIMES = ["Lunch", "Dinner", "Any"];
 
@@ -27,6 +27,8 @@ const MealForm = ({ meals, setMeals }) => {
       setMealTime(TIMES[0]);
       setNumberOfDays(0);
     });
+
+    closeView();
   };
 
   const handleMealNameChange = (event) => {
@@ -47,6 +49,7 @@ const MealForm = ({ meals, setMeals }) => {
 
   return (
     <form onSubmit={addMeal}>
+      <h2>Add New Meal</h2>
       <div>
         <label htmlFor="mealName">Name</label>
         <input value={mealName} onChange={handleMealNameChange} id="mealName" />
@@ -88,6 +91,9 @@ const MealForm = ({ meals, setMeals }) => {
         />
       </div>
       <button type="submit">Save</button>
+      <button type="button" onClick={closeView}>
+        Cancel
+      </button>
     </form>
   );
 };

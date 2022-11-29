@@ -11,6 +11,7 @@ const App = () => {
 
   const [meals, setMeals] = useState([]);
   const [filter, setFilter] = useState("");
+  const [summaryView, setSummaryView] = useState(true);
 
   useEffect(() => {
     mealService.getAllMeals().then((initialMeals) => {
@@ -64,19 +65,31 @@ const App = () => {
     }
   };
 
+  const changeView = () => {
+    setSummaryView(!summaryView);
+  };
+
   const mealsToShow = filter === "" ? meals : applyFilter(filter);
 
   return (
     <div>
       <h1>Meal Planner</h1>
-      <h2>Filter List</h2>
+      <h2>Options</h2>
       <Filter value={filter} handleChange={handleFilterChange} />
+      <button onClick={changeView}>
+        {summaryView ? "Details View" : "Summary View"}
+      </button>
       <h2>Add New Meal</h2>
       <MealForm meals={meals} setMeals={setMeals} />
       <h2>List of Meals</h2>
       <ul>
         {mealsToShow.map((m) => (
-          <Meal meal={m} key={m.id} deleteMeal={deleteMeal} />
+          <Meal
+            meal={m}
+            key={m.id}
+            deleteMeal={deleteMeal}
+            summaryView={summaryView}
+          />
         ))}
       </ul>
     </div>

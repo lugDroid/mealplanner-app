@@ -1,13 +1,10 @@
 import { useState } from "react";
 import mealService from "../services/mealService";
 
-const MealForm = ({ closeView, meals, setMeals }) => {
-  const GROUPS = ["A", "B", "C"];
-  const TIMES = ["Lunch", "Dinner", "Any"];
-
+const MealForm = ({ closeView, meals, setMeals, groups, times }) => {
   const [mealName, setMealName] = useState("");
-  const [mealGroup, setMealGroup] = useState(GROUPS[0]);
-  const [mealTime, setMealTime] = useState(TIMES[0]);
+  const [mealGroup, setMealGroup] = useState(groups[0]);
+  const [mealTime, setMealTime] = useState(times[0]);
   const [numberOfDays, setNumberOfDays] = useState(0);
 
   const addMeal = (event) => {
@@ -23,8 +20,8 @@ const MealForm = ({ closeView, meals, setMeals }) => {
     mealService.createMeal(mealObj).then((returnedMeal) => {
       setMeals(meals.concat(returnedMeal));
       setMealName("");
-      setMealGroup(GROUPS[0]);
-      setMealTime(TIMES[0]);
+      setMealGroup(groups[0]);
+      setMealTime(times[0]);
       setNumberOfDays(0);
     });
 
@@ -61,7 +58,7 @@ const MealForm = ({ closeView, meals, setMeals }) => {
           value={mealGroup}
           onChange={handleMealGroupChange}
         >
-          {GROUPS.map((g) => (
+          {groups.map((g) => (
             <option key={g} value={g}>
               {g}
             </option>
@@ -75,7 +72,7 @@ const MealForm = ({ closeView, meals, setMeals }) => {
           value={mealTime}
           onChange={handleMealTimeChange}
         >
-          {TIMES.map((t) => (
+          {times.map((t) => (
             <option key={t} value={t}>
               {t}
             </option>

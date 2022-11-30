@@ -15,8 +15,6 @@ const App = () => {
   return (
     <div>
       <h1>Meal Planner</h1>
-      <MealForm meals={meals} setMeals={setMeals} />
-
       <Content meals={meals} setMeals={setMeals} />
     </div>
   );

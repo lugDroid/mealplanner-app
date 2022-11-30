@@ -5,6 +5,9 @@ import ModifyMeal from "./ModifyMeal";
 import MealForm from "./MealForm";
 
 const Content = ({ meals, setMeals }) => {
+  const GROUPS = ["A", "B", "C"];
+  const TIMES = ["Lunch", "Dinner", "Any"];
+
   const [activeView, setActiveView] = useState("list");
   const [mealToModify, setMealToModify] = useState({});
 
@@ -31,7 +34,12 @@ const Content = ({ meals, setMeals }) => {
 
   if (activeView === "modify") {
     return (
-      <ModifyMeal closeView={() => setActiveView("list")} meal={mealToModify} />
+      <ModifyMeal
+        closeView={() => setActiveView("list")}
+        meal={mealToModify}
+        groups={GROUPS}
+        times={TIMES}
+      />
     );
   } else if (activeView === "new") {
     return (
@@ -39,6 +47,8 @@ const Content = ({ meals, setMeals }) => {
         closeView={() => setActiveView("list")}
         meals={meals}
         setMeals={setMeals}
+        groups={GROUPS}
+        times={TIMES}
       />
     );
   } else {

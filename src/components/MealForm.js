@@ -28,20 +28,26 @@ const MealForm = ({ closeView, meals, setMeals, groups, times }) => {
     closeView();
   };
 
-  const handleMealNameChange = (event) => {
-    setMealName(event.target.value);
-  };
+  const handleInputChange = (event) => {
+    const value = event.target.value;
+    const name = event.target.getAttribute("name");
 
-  const handleNumberOfDaysChange = (event) => {
-    setNumberOfDays(event.target.value);
-  };
-
-  const handleMealGroupChange = (event) => {
-    setMealGroup(event.target.value);
-  };
-
-  const handleMealTimeChange = (event) => {
-    setMealTime(event.target.value);
+    switch (name) {
+      case "meal-name":
+        setMealName(value);
+        break;
+      case "group-select":
+        setMealGroup(value);
+        break;
+      case "time-select":
+        setMealTime(value);
+        break;
+      case "number-of-days":
+        setNumberOfDays(value);
+        break;
+      default:
+        break;
+    }
   };
 
   return (
@@ -49,14 +55,14 @@ const MealForm = ({ closeView, meals, setMeals, groups, times }) => {
       <h2>Add New Meal</h2>
       <div>
         <label htmlFor="mealName">Name</label>
-        <input value={mealName} onChange={handleMealNameChange} id="mealName" />
+        <input value={mealName} onChange={handleInputChange} name="meal-name" />
       </div>
       <div>
         <label htmlFor="group-select">Group</label>
         <select
-          id="group-select"
+          name="group-select"
           value={mealGroup}
-          onChange={handleMealGroupChange}
+          onChange={handleInputChange}
         >
           {groups.map((g) => (
             <option key={g} value={g}>
@@ -68,9 +74,9 @@ const MealForm = ({ closeView, meals, setMeals, groups, times }) => {
       <div>
         <label htmlFor="time-select">Time of Day</label>
         <select
-          id="time-select"
+          name="time-select"
           value={mealTime}
-          onChange={handleMealTimeChange}
+          onChange={handleInputChange}
         >
           {times.map((t) => (
             <option key={t} value={t}>
@@ -83,8 +89,8 @@ const MealForm = ({ closeView, meals, setMeals, groups, times }) => {
         <label htmlFor="number-of-days">Number Of Days</label>
         <input
           value={numberOfDays}
-          onChange={handleNumberOfDaysChange}
-          id="number-of-days"
+          onChange={handleInputChange}
+          name="number-of-days"
         />
       </div>
       <button type="submit">Save</button>

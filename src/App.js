@@ -11,6 +11,7 @@ const App = () => {
   const [activeView, setActiveView] = useState("list");
   const [mealToModify, setMealToModify] = useState({});
   const [meals, setMeals] = useState([]);
+  const [summaryView, setSummaryView] = useState(true);
 
   useEffect(() => {
     mealService.getAllMeals().then((initialMeals) => {
@@ -37,6 +38,10 @@ const App = () => {
         mealService.getAllMeals().then((meals) => setMeals(meals));
       });
     }
+  };
+
+  const changeView = () => {
+    setSummaryView(!summaryView);
   };
 
   let content;
@@ -66,6 +71,8 @@ const App = () => {
         meals={meals}
         deleteMeal={deleteMeal}
         showMealForm={showMealForm}
+        changeView={changeView}
+        summaryView={summaryView}
       />
     );
   }

@@ -2,16 +2,17 @@ import { useState } from "react";
 import Meal from "./Meal";
 import Filter from "./Filter";
 
-const MealList = ({ meals, deleteMeal, showMealForm }) => {
+const MealList = ({
+  meals,
+  deleteMeal,
+  showMealForm,
+  changeView,
+  summaryView,
+}) => {
   const GROUP_FILTER = "Group:";
   const TIME_FILTER = "Time:";
   const DAYS_FILTER = "Days:";
-  const [summaryView, setSummaryView] = useState(true);
   const [filter, setFilter] = useState("");
-
-  const changeView = () => {
-    setSummaryView(!summaryView);
-  };
 
   const handleFilterChange = (event) => {
     setFilter(event.target.value);

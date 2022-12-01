@@ -1,17 +1,14 @@
 import { useState, useEffect } from "react";
 import MealList from "./components/MealList";
-import ModifyMeal from "./components/ModifyMeal";
 import MealForm from "./components/MealForm";
 import mealService from "./services/mealService";
 
 const App = () => {
-  const GROUPS = ["A", "B", "C"];
-  const TIMES = ["Lunch", "Dinner", "Any"];
-
   const [activeView, setActiveView] = useState("list");
   const [mealToModify, setMealToModify] = useState({});
   const [meals, setMeals] = useState([]);
   const [summaryView, setSummaryView] = useState(true);
+  const [filter, setFilter] = useState("");
 
   useEffect(() => {
     mealService.getAllMeals().then((initialMeals) => {
@@ -48,11 +45,9 @@ const App = () => {
 
   if (activeView === "modify") {
     content = (
-      <ModifyMeal
+      <MealForm
         closeView={() => setActiveView("list")}
         meal={mealToModify}
-        groups={GROUPS}
-        times={TIMES}
         meals={meals}
         setMeals={setMeals}
       />
@@ -61,10 +56,9 @@ const App = () => {
     content = (
       <MealForm
         closeView={() => setActiveView("list")}
+        meal={null}
         meals={meals}
         setMeals={setMeals}
-        groups={GROUPS}
-        times={TIMES}
       />
     );
   } else {
@@ -75,6 +69,8 @@ const App = () => {
         showMealForm={showMealForm}
         changeView={changeView}
         summaryView={summaryView}
+        filter={filter}
+        setFilter={setFilter}
       />
     );
   }

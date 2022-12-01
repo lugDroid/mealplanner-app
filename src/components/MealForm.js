@@ -1,32 +1,20 @@
 import { useState } from "react";
 import mealService from "../services/mealService";
 
-const MealForm = ({ closeView, meals, setMeals, groups, times }) => {
-  const [mealName, setMealName] = useState("");
-  const [mealGroup, setMealGroup] = useState(groups[0]);
-  const [mealTime, setMealTime] = useState(times[0]);
-  const [numberOfDays, setNumberOfDays] = useState(0);
+const MealForm = ({ closeView, meal, meals, setMeals }) => {
+  const GROUPS = ["A", "B", "C"];
+  const TIMES = ["Lunch", "Dinner", "Any"];
 
-  const addMeal = (event) => {
-    event.preventDefault();
-    const mealObj = {
-      name: mealName,
-      group: mealGroup,
-      timeOfDay: mealTime,
-      numberOfDays: numberOfDays,
-      id: Math.max(meals.map((m) => m.id)) + 1,
-    };
-
-    mealService.createMeal(mealObj).then((returnedMeal) => {
-      setMeals(meals.concat(returnedMeal));
-      setMealName("");
-      setMealGroup(groups[0]);
-      setMealTime(times[0]);
-      setNumberOfDays(0);
-    });
-
-    closeView();
-  };
+  const [mealName, setMealName] = useState(meal === null ? "" : meal.name);
+  const [mealGroup, setMealGroup] = useState(
+    meal === null ? GROUPS[0] : meal.group
+  );
+  const [mealTime, setMealTime] = useState(
+    meal === null ? TIMES[0] : meal.timeOfDay
+  );
+  const [numberOfDays, setNumberOfDays] = useState(
+    meal === null ? 0 : meal.numberOfDays
+  );
 
   const handleInputChange = (event) => {
     const value = event.target.value;
@@ -50,9 +38,53 @@ const MealForm = ({ closeView, meals, setMeals, groups, times }) => {
     }
   };
 
+  const addMeal = (event) => {
+    event.preventDefault();
+    const mealObj = {
+      name: mealName,
+      group: mealGroup,
+      timeOfDay: mealTime,
+      numberOfDays: numberOfDays,
+      id: Math.max(meals.map((m) => m.id)) + 1,
+    };
+
+    mealService.createMeal(mealObj).then((returnedMeal) => {
+      setMeals(meals.concat(returnedMeal));
+      setMealName("");
+      setMealGroup(GROUPS[0]);
+      setMealTime(TIMES[0]);
+      setNumberOfDays(0);
+    });
+
+    closeView();
+  };
+
+  const modifyMeal = (event) => {
+    event.preventDefault();
+
+    const mealObject = {
+      name: mealName,
+      group: mealGroup,
+      timeOfDay: mealTime,
+      numberOfDays: numberOfDays,
+      id: meal.id,
+    };
+
+    mealService.modifyMeal(meal.id, mealObject).then((returnedMeal) => {
+      setMeals(meals.map((m) => (m.id !== meal.id ? m : returnedMeal)));
+    });
+
+    setMealName("");
+    setMealGroup(GROUPS[0]);
+    setMealTime(TIMES[0]);
+    setNumberOfDays(0);
+
+    closeView();
+  };
+
   return (
-    <form onSubmit={addMeal}>
-      <h2>Add New Meal</h2>
+    <form onSubmit={meal === null ? addMeal : modifyMeal}>
+      <h2>{meal === null ? "Add new meal" : `Modify ${meal.name}`}</h2>
       <div>
         <label htmlFor="mealName">Name</label>
         <input value={mealName} onChange={handleInputChange} name="meal-name" />
@@ -64,7 +96,7 @@ const MealForm = ({ closeView, meals, setMeals, groups, times }) => {
           value={mealGroup}
           onChange={handleInputChange}
         >
-          {groups.map((g) => (
+          {GROUPS.map((g) => (
             <option key={g} value={g}>
               {g}
             </option>
@@ -78,7 +110,7 @@ const MealForm = ({ closeView, meals, setMeals, groups, times }) => {
           value={mealTime}
           onChange={handleInputChange}
         >
-          {times.map((t) => (
+          {TIMES.map((t) => (
             <option key={t} value={t}>
               {t}
             </option>
@@ -94,9 +126,7 @@ const MealForm = ({ closeView, meals, setMeals, groups, times }) => {
         />
       </div>
       <button type="submit">Save</button>
-      <button type="button" onClick={closeView}>
-        Cancel
-      </button>
+      <button onClick={closeView}>Cancel</button>
     </form>
   );
 };

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Meal from "./Meal";
 import Filter from "./Filter";
 
@@ -8,11 +7,12 @@ const MealList = ({
   showMealForm,
   changeView,
   summaryView,
+  filter,
+  setFilter,
 }) => {
   const GROUP_FILTER = "Group:";
   const TIME_FILTER = "Time:";
   const DAYS_FILTER = "Days:";
-  const [filter, setFilter] = useState("");
 
   const handleFilterChange = (event) => {
     setFilter(event.target.value);

@@ -17,10 +17,16 @@ const deleteMeal = (id) => {
   return req.then((res) => res.data);
 };
 
+const modifyMeal = (id, meal) => {
+  const req = axios.put(`${baseUrl}/${id}`, meal);
+  return req.then((res) => res.data);
+};
+
 const mealService = {
   getAllMeals,
   createMeal,
   deleteMeal,
+  modifyMeal,
 };
 
 export default mealService;

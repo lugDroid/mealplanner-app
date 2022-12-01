@@ -54,7 +54,6 @@ const MealList = ({
 
   return (
     <>
-      <h2>List of Meals</h2>
       <Filter value={filter} handleChange={handleFilterChange} />
       <button onClick={changeView}>
         {summaryView ? "Details View" : "Summary View"}

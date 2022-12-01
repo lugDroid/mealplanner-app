@@ -18,7 +18,7 @@ const Meal = ({ meal, deleteMeal, summaryView, modifyMeal }) => {
   }
   return (
     <li>
-      <h4>{meal.name}</h4>
+      <p>{meal.name}</p>
       {details}
     </li>
   );

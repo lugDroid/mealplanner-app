@@ -126,7 +126,9 @@ const MealForm = ({ closeView, meal, meals, setMeals }) => {
         />
       </div>
       <button type="submit">Save</button>
-      <button onClick={closeView}>Cancel</button>
+      <button type="button" onClick={closeView}>
+        Cancel
+      </button>
     </form>
   );
 };

@@ -1,6 +1,7 @@
 import { useState } from "react";
+import mealService from "../services/mealService";
 
-const ModifyMeal = ({ closeView, meal, groups, times }) => {
+const ModifyMeal = ({ closeView, meal, groups, times, meals, setMeals }) => {
   const [mealName, setMealName] = useState(meal.name);
   const [mealGroup, setMealGroup] = useState(meal.group);
   const [mealTime, setMealTime] = useState(meal.timeOfDay);
@@ -28,8 +29,31 @@ const ModifyMeal = ({ closeView, meal, groups, times }) => {
     }
   };
 
+  const modifyMeal = (event) => {
+    event.preventDefault();
+
+    const mealObject = {
+      name: mealName,
+      group: mealGroup,
+      timeOfDay: mealTime,
+      numberOfDays: numberOfDays,
+      id: meal.id,
+    };
+
+    mealService.modifyMeal(meal.id, mealObject).then((returnedMeal) => {
+      setMeals(meals.map((m) => (m.id !== meal.id ? m : returnedMeal)));
+    });
+
+    setMealName("");
+    setMealGroup(groups[0]);
+    setMealTime(times[0]);
+    setNumberOfDays(0);
+
+    closeView();
+  };
+
   return (
-    <>
+    <form onSubmit={modifyMeal}>
       <h2>Modify {meal.name}</h2>
       <div>
         <label htmlFor="mealName">Name</label>
@@ -71,8 +95,9 @@ const ModifyMeal = ({ closeView, meal, groups, times }) => {
           name="number-of-days"
         />
       </div>
+      <button type="submit">Save</button>
       <button onClick={closeView}>Cancel</button>
-    </>
+    </form>
   );
 };
 

@@ -53,6 +53,8 @@ const App = () => {
         meal={mealToModify}
         groups={GROUPS}
         times={TIMES}
+        meals={meals}
+        setMeals={setMeals}
       />
     );
   } else if (activeView === "new") {

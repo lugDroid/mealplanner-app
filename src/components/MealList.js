@@ -9,6 +9,7 @@ const MealList = ({
   summaryView,
   filter,
   setFilter,
+  showSchedule,
 }) => {
   const GROUP_FILTER = "Group:";
   const TIME_FILTER = "Time:";
@@ -59,6 +60,7 @@ const MealList = ({
         {summaryView ? "Details View" : "Summary View"}
       </button>
       <button onClick={() => showMealForm(0)}>Add New</button>
+      <button onClick={showSchedule}>Schedule</button>
       <ul>
         {mealsToShow.map((m) => (
           <Meal

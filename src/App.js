@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import MealList from "./components/MealList";
 import MealForm from "./components/MealForm";
 import mealService from "./services/mealService";
+import Schedule from "./components/Schedule";
 
 const App = () => {
   const [activeView, setActiveView] = useState("list");
@@ -61,6 +62,11 @@ const App = () => {
         setMeals={setMeals}
       />
     );
+  } else if (activeView === "schedule") {
+    console.log("Schedule view active");
+    content = (
+      <Schedule closeView={() => setActiveView("list")} meals={meals} />
+    );
   } else {
     content = (
       <MealList
@@ -71,6 +77,7 @@ const App = () => {
         summaryView={summaryView}
         filter={filter}
         setFilter={setFilter}
+        showSchedule={() => setActiveView("schedule")}
       />
     );
   }

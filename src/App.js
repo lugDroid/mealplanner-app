@@ -1,90 +1,35 @@
-import { useState, useEffect } from "react";
-import MealList from "./components/MealList";
-import MealForm from "./components/MealForm";
-import mealService from "./services/mealService";
-import Schedule from "./components/Schedule";
+import { useState } from "react";
+
+import WeeklyPlansTab from "./components/WeeklyPlansTab";
+import GroupsTab from "./components/GroupsTab";
+import MealsTab from "./components/MealsTab";
 
 const App = () => {
-  const [activeView, setActiveView] = useState("list");
-  const [mealToModify, setMealToModify] = useState({});
-  const [meals, setMeals] = useState([]);
-  const [summaryView, setSummaryView] = useState(true);
-  const [filter, setFilter] = useState("");
+  const [activeTab, setActiveTab] = useState("meals");
 
-  useEffect(() => {
-    mealService.getAllMeals().then((initialMeals) => {
-      setMeals(initialMeals);
-    });
-  }, []);
+  let tab;
 
-  const showMealForm = (id) => {
-    if (id) {
-      setActiveView("modify");
-      const meal = meals.find((m) => m.id === id);
-      setMealToModify(meal);
-    } else {
-      setActiveView("new");
-      setMealToModify({});
-    }
-  };
-
-  const deleteMeal = (id) => {
-    const meal = meals.find((m) => m.id === id);
-
-    if (window.confirm(`Delete ${meal.name}?`)) {
-      mealService.deleteMeal(id).then(() => {
-        mealService.getAllMeals().then((meals) => setMeals(meals));
-      });
-    }
-  };
-
-  const changeView = () => {
-    setSummaryView(!summaryView);
-  };
-
-  let content;
-
-  if (activeView === "modify") {
-    content = (
-      <MealForm
-        closeView={() => setActiveView("list")}
-        meal={mealToModify}
-        meals={meals}
-        setMeals={setMeals}
-      />
-    );
-  } else if (activeView === "new") {
-    content = (
-      <MealForm
-        closeView={() => setActiveView("list")}
-        meal={null}
-        meals={meals}
-        setMeals={setMeals}
-      />
-    );
-  } else if (activeView === "schedule") {
-    console.log("Schedule view active");
-    content = (
-      <Schedule closeView={() => setActiveView("list")} meals={meals} />
-    );
-  } else {
-    content = (
-      <MealList
-        meals={meals}
-        deleteMeal={deleteMeal}
-        showMealForm={showMealForm}
-        changeView={changeView}
-        summaryView={summaryView}
-        filter={filter}
-        setFilter={setFilter}
-        showSchedule={() => setActiveView("schedule")}
-      />
-    );
+  switch (activeTab) {
+    case "meals":
+      tab = <MealsTab />;
+      break;
+    case "groups":
+      tab = <GroupsTab />;
+      break;
+    case "weeklyPlans":
+      tab = <WeeklyPlansTab />;
+      break;
+    default:
+      tab = <MealsTab />;
   }
+
   return (
     <div>
       <h1>Meal Planner</h1>
-      {content}
+      <button onClick={() => setActiveTab("meals")}>Meals</button>
+      <button onClick={() => setActiveTab("groups")}>Groups</button>
+      <button onClick={() => setActiveTab("weeklyPlans")}>Weekly Plans</button>
+      {tab}
     </div>
   );
 };

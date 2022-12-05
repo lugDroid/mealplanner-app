@@ -84,7 +84,7 @@ const MealForm = ({ closeView, meal, meals, setMeals }) => {
 
   return (
     <form onSubmit={meal === null ? addMeal : modifyMeal}>
-      <h2>{meal === null ? "Add new meal" : `Modify ${meal.name}`}</h2>
+      <h3>{meal === null ? "Add new meal" : `Modify ${meal.name}`}</h3>
       <div>
         <label htmlFor="mealName">Name</label>
         <input value={mealName} onChange={handleInputChange} name="meal-name" />

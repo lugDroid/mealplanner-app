@@ -1,5 +1,5 @@
 const WeeklyPlansTab = () => {
-  return <h4>Weekly Plans</h4>;
+  return <h2>Weekly Plans</h2>;
 };
 
 export default WeeklyPlansTab;

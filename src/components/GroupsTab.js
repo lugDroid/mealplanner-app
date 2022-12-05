@@ -31,7 +31,7 @@ const GroupsTab = () => {
 
   return (
     <div>
-      <h4>Groups</h4>
+      <h2>Groups</h2>
       <button onClick={() => setActiveView("new")}>Add new</button>
       {content}
     </div>

@@ -86,7 +86,7 @@ const MealsTab = () => {
 
   return (
     <div>
-      <h4>Meals</h4>
+      <h2>Meals</h2>
       {content}
     </div>
   );

@@ -15,6 +15,10 @@ const GroupsTab = () => {
     });
   }, []);
 
+  const saveNewGroup = (newGroup) => {
+    setGroups(groups.concat(newGroup));
+  };
+
   let content;
   switch (activeView) {
     case "list":
@@ -22,7 +26,12 @@ const GroupsTab = () => {
       break;
     case "new":
       content = (
-        <GroupForm closeView={() => setActiveView("list")} group={null} />
+        <GroupForm
+          closeView={() => setActiveView("list")}
+          group={null}
+          newId={() => Math.max(groups.map((g) => g.id)) + 1}
+          saveNew={saveNewGroup}
+        />
       );
       break;
     default:

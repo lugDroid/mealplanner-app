@@ -19,10 +19,20 @@ const GroupsTab = () => {
     setGroups(groups.concat(newGroup));
   };
 
+  const deleteGroup = (id) => {
+    const group = groups.find((g) => g.id === id);
+
+    if (window.confirm(`Delete ${group.name}?`)) {
+      groupService.deleteGroup(id).then(() => {
+        groupService.getAllGroups().then((groups) => setGroups(groups));
+      });
+    }
+  };
+
   let content;
   switch (activeView) {
     case "list":
-      content = <GroupsList groups={groups} />;
+      content = <GroupsList groups={groups} deleteAction={deleteGroup} />;
       break;
     case "new":
       content = (

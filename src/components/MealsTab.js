@@ -4,7 +4,6 @@ import mealService from "../services/mealService";
 
 import MealList from "./MealList";
 import MealForm from "./MealForm";
-import Schedule from "./Schedule";
 
 const MealsTab = () => {
   const [activeView, setActiveView] = useState("list");
@@ -64,11 +63,6 @@ const MealsTab = () => {
         setMeals={setMeals}
       />
     );
-  } else if (activeView === "schedule") {
-    console.log("Schedule view active");
-    content = (
-      <Schedule closeView={() => setActiveView("list")} meals={meals} />
-    );
   } else {
     content = (
       <MealList
@@ -79,7 +73,6 @@ const MealsTab = () => {
         summaryView={summaryView}
         filter={filter}
         setFilter={setFilter}
-        showSchedule={() => setActiveView("schedule")}
       />
     );
   }

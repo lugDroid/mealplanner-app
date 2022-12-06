@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import groupService from "../services/groupService";
 
-const GroupForm = ({ closeView, group, newId, saveNew }) => {
+const GroupForm = ({ closeView, group, newId, saveNew, saveModifiedGroup }) => {
   const [groupName, setGroupName] = useState(group === null ? "" : group.name);
   const [weeklyRations, setWeeklyRations] = useState(
     group === null ? 0 : group.weeklyRations
@@ -42,8 +42,28 @@ const GroupForm = ({ closeView, group, newId, saveNew }) => {
     closeView();
   };
 
+  const modifyGroup = (event) => {
+    event.preventDefault();
+
+    const groupObj = {
+      name: groupName,
+      weeklyRations: weeklyRations,
+      id: newId(),
+    };
+
+    saveModifiedGroup(groupObj);
+
+    groupService.modifyGroup(group.id, groupObj).then((returnedGroup) => {
+      saveModifiedGroup(returnedGroup);
+      setGroupName("");
+      setWeeklyRations(0);
+    });
+
+    closeView();
+  };
+
   return (
-    <form onSubmit={group === null ? addGroup : () => console.log("Modify")}>
+    <form onSubmit={group === null ? addGroup : modifyGroup}>
       <h3>{group === null ? "Add new group" : `Modify ${group.name}`}</h3>
       <div>
         <label htmlFor="groupName">Name</label>

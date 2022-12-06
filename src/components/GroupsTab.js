@@ -8,6 +8,7 @@ import GroupsList from "./GroupsList";
 const GroupsTab = () => {
   const [groups, setGroups] = useState([]);
   const [activeView, setActiveView] = useState("list");
+  const [groupToModify, setGroupToModify] = useState({});
 
   useEffect(() => {
     groupService.getAllGroups().then((groups) => {
@@ -17,6 +18,12 @@ const GroupsTab = () => {
 
   const saveNewGroup = (newGroup) => {
     setGroups(groups.concat(newGroup));
+  };
+
+  const saveModifiedGroup = (modifiedGroup) => {
+    setGroups(
+      groups.map((g) => (g.id === modifiedGroup.id ? modifiedGroup : g))
+    );
   };
 
   const deleteGroup = (id) => {
@@ -29,10 +36,22 @@ const GroupsTab = () => {
     }
   };
 
+  const showModifyForm = (group) => {
+    setGroupToModify(group);
+    setActiveView("modify");
+  };
+
   let content;
   switch (activeView) {
     case "list":
-      content = <GroupsList groups={groups} deleteAction={deleteGroup} />;
+      content = (
+        <GroupsList
+          groups={groups}
+          deleteAction={deleteGroup}
+          showModifyForm={showModifyForm}
+          saveModifiedGroup={saveModifiedGroup}
+        />
+      );
       break;
     case "new":
       content = (
@@ -41,6 +60,18 @@ const GroupsTab = () => {
           group={null}
           newId={() => Math.max(groups.map((g) => g.id)) + 1}
           saveNew={saveNewGroup}
+          saveModifiedGroup={saveModifiedGroup}
+        />
+      );
+      break;
+    case "modify":
+      content = (
+        <GroupForm
+          closeView={() => setActiveView("list")}
+          group={groupToModify}
+          newId={() => Math.max(groups.map((g) => g.id)) + 1}
+          saveNew={saveNewGroup}
+          saveModifiedGroup={saveModifiedGroup}
         />
       );
       break;

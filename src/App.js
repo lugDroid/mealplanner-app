@@ -24,7 +24,7 @@ const App = () => {
 
   switch (activeTab) {
     case "meals":
-      tab = <MealsTab meals={meals} setMeals={setMeals} />;
+      tab = <MealsTab meals={meals} setMeals={setMeals} groups={groups} />;
       break;
     case "groups":
       tab = <GroupsTab groups={groups} setGroups={setGroups} />;

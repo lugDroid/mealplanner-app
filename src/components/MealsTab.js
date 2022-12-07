@@ -3,7 +3,7 @@ import mealService from "../services/mealService";
 import MealList from "./MealList";
 import MealForm from "./MealForm";
 
-const MealsTab = ({ meals, setMeals }) => {
+const MealsTab = ({ meals, setMeals, groups }) => {
   const [activeView, setActiveView] = useState("list");
   const [summaryView, setSummaryView] = useState(true);
   const [filter, setFilter] = useState("");
@@ -43,6 +43,7 @@ const MealsTab = ({ meals, setMeals }) => {
         meal={mealToModify}
         meals={meals}
         setMeals={setMeals}
+        groups={groups}
       />
     );
   } else if (activeView === "new") {
@@ -52,6 +53,7 @@ const MealsTab = ({ meals, setMeals }) => {
         meal={null}
         meals={meals}
         setMeals={setMeals}
+        groups={groups}
       />
     );
   } else {

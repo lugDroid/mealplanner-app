@@ -1,22 +1,13 @@
-import { useState, useEffect } from "react";
-
+import { useState } from "react";
 import mealService from "../services/mealService";
-
 import MealList from "./MealList";
 import MealForm from "./MealForm";
 
-const MealsTab = () => {
+const MealsTab = ({ meals, setMeals }) => {
   const [activeView, setActiveView] = useState("list");
-  const [meals, setMeals] = useState([]);
   const [summaryView, setSummaryView] = useState(true);
   const [filter, setFilter] = useState("");
   const [mealToModify, setMealToModify] = useState({});
-
-  useEffect(() => {
-    mealService.getAllMeals().then((initialMeals) => {
-      setMeals(initialMeals);
-    });
-  }, []);
 
   const showMealForm = (id) => {
     if (id) {

@@ -1,20 +1,11 @@
-import { useState, useEffect } from "react";
-
+import { useState } from "react";
 import groupService from "../services/groupService";
 import GroupForm from "./GroupForm";
-
 import GroupsList from "./GroupsList";
 
-const GroupsTab = () => {
-  const [groups, setGroups] = useState([]);
+const GroupsTab = ({ groups, setGroups }) => {
   const [activeView, setActiveView] = useState("list");
   const [groupToModify, setGroupToModify] = useState({});
-
-  useEffect(() => {
-    groupService.getAllGroups().then((groups) => {
-      setGroups(groups);
-    });
-  }, []);
 
   const saveNewGroup = (newGroup) => {
     setGroups(groups.concat(newGroup));

@@ -21,19 +21,19 @@ const WeeklyPlansTab = ({ meals, groups }) => {
     });
   }, []);
 
-  const getRandomMeal = (meals, timeOfDay) => {
+  const getRandomMeal = (meals, times) => {
     const index = Math.floor(Math.random() * meals.length);
     const randomMeal = meals[index];
 
-    if (randomMeal.timeOfDay === timeOfDay) {
+    if (times.includes(randomMeal.timeOfDay)) {
       return randomMeal;
     }
 
-    return getRandomMeal(meals, timeOfDay);
+    return getRandomMeal(meals, times);
   };
 
-  const generateNewPlan = () => {
-    console.log(`Generating new meals plan`);
+  const generateNewPlan = (times) => {
+    console.log(`Generating new meals plan for ${times[0]}`);
     let weeklyMeals = [];
 
     const groupsUsed = groups.map((g) => {
@@ -41,7 +41,7 @@ const WeeklyPlansTab = ({ meals, groups }) => {
     });
 
     for (let i = 0; i < 7; ) {
-      const selectedMeal = getRandomMeal(meals, "Lunch");
+      const selectedMeal = getRandomMeal(meals, times);
       const selectedGroup = groupsUsed.find(
         (g) => g.name === selectedMeal.group
       );
@@ -51,7 +51,8 @@ const WeeklyPlansTab = ({ meals, groups }) => {
 
       if (
         selectedGroup.timesUsed + selectedMeal.numberOfDays <
-        selectedGroup.weeklyRations
+          selectedGroup.weeklyRations &&
+        !weeklyMeals.includes(selectedMeal)
       ) {
         selectedGroup.timesUsed += selectedMeal.numberOfDays;
 
@@ -83,7 +84,14 @@ const WeeklyPlansTab = ({ meals, groups }) => {
   return (
     <div>
       <h2>Weekly Plans</h2>
-      <button onClick={generateNewPlan}>Add New</button>
+      <button
+        onClick={() => {
+          generateNewPlan(["Lunch", "Any"]);
+          generateNewPlan(["Dinner", "Any"]);
+        }}
+      >
+        Add New
+      </button>
       {content}
     </div>
   );

@@ -1,9 +1,33 @@
+import { useState } from "react";
+
 const WeeklyPlan = ({ closeView, savePlan, lunchPlan, dinnerPlan }) => {
+  const [planName, setPlanName] = useState("");
   const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
+  const handleInputChange = (event) => {
+    const value = event.target.value;
+    const name = event.target.getAttribute("name");
+
+    switch (name) {
+      case "plan-name":
+        setPlanName(value);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const addPlan = (event) => {
+    event.preventDefault();
+    savePlan({ name: planName, lunch: lunchPlan, dinner: dinnerPlan });
+
+    closeView();
+  };
+
   return (
-    <div>
+    <form onSubmit={addPlan}>
       <h2>New Schedule</h2>
+      <input value={planName} onChange={handleInputChange} name="plan-name" />
       <h3>Lunch Meals</h3>
       <ul>
         {lunchPlan.map((m, i) => (
@@ -20,16 +44,11 @@ const WeeklyPlan = ({ closeView, savePlan, lunchPlan, dinnerPlan }) => {
           </li>
         ))}
       </ul>
-      <button
-        type="button"
-        onClick={() => savePlan({ lunch: lunchPlan, dinner: dinnerPlan })}
-      >
-        Save
-      </button>
+      <button type="submit">Save</button>
       <button type="button" onClick={closeView}>
         Cancel
       </button>
-    </div>
+    </form>
   );
 };
 

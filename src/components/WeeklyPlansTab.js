@@ -81,8 +81,6 @@ const WeeklyPlansTab = ({ meals, groups }) => {
     planService.createPlan(plan).then((returnedPlan) => {
       setPlans(plans.concat(returnedPlan));
     });
-
-    setActiveView("list");
   };
 
   let content;

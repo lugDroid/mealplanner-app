@@ -6,9 +6,15 @@ const PlansList = ({ plans }) => {
       </div>
     );
   } else {
+    console.log(plans);
     return (
       <div>
         <p>You have {plans.length} plans</p>
+        <ul>
+          {plans.map((p, i) => (
+            <li key={i}>{p.name}</li>
+          ))}
+        </ul>
       </div>
     );
   }

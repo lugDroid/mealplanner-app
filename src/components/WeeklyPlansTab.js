@@ -1,20 +1,14 @@
 import { useState, useEffect } from "react";
 import PlansList from "./PlansList";
 import planService from "../services/planService";
-// import Schedule from "./Schedule";
+import WeeklyPlan from "./WeeklyPlan";
 
 const WeeklyPlansTab = ({ meals, groups }) => {
   const [plans, setPlans] = useState([]);
   const [activeView, setActiveView] = useState("list");
-  // showSchedule={() => setActiveView("schedule")}
+  const [lunchPlan, setLunchPlan] = useState([]);
+  const [dinnerPlan, setDinnerPlan] = useState([]);
 
-  /* 
-  } else if (activeView === "schedule") {
-    console.log("Schedule view active");
-    content = (
-      <Schedule closeView={() => setActiveView("list")} meals={meals} />
-    ); 
-  */
   useEffect(() => {
     planService.getAllPlans().then((plans) => {
       setPlans(plans);
@@ -65,16 +59,46 @@ const WeeklyPlansTab = ({ meals, groups }) => {
       }
     }
 
-    weeklyMeals.forEach((m, i) => console.log(i, m.name));
+    //weeklyMeals.forEach((m, i) => console.log(i, m.name));
     groupsUsed.forEach((g) =>
       console.log(g.name, g.weeklyRations, g.timesUsed)
     );
+
+    return weeklyMeals;
+  };
+
+  const activateNewPlanView = (event) => {
+    event.preventDefault();
+
+    setLunchPlan(generateNewPlan(["Lunch", "Any"]));
+    setDinnerPlan(generateNewPlan(["Dinner", "Any"]));
+
+    setActiveView("new");
+  };
+
+  const saveNewPlan = (plan) => {
+    console.log("Saving plan...");
+    planService.createPlan(plan).then((returnedPlan) => {
+      setPlans(plans.concat(returnedPlan));
+    });
+
+    setActiveView("list");
   };
 
   let content;
   switch (activeView) {
     case "list":
       content = <PlansList plans={plans} />;
+      break;
+    case "new":
+      content = (
+        <WeeklyPlan
+          closeView={() => setActiveView("list")}
+          savePlan={saveNewPlan}
+          lunchPlan={lunchPlan}
+          dinnerPlan={dinnerPlan}
+        />
+      );
       break;
     default:
       content = <PlansList plans={plans} />;
@@ -84,14 +108,7 @@ const WeeklyPlansTab = ({ meals, groups }) => {
   return (
     <div>
       <h2>Weekly Plans</h2>
-      <button
-        onClick={() => {
-          generateNewPlan(["Lunch", "Any"]);
-          generateNewPlan(["Dinner", "Any"]);
-        }}
-      >
-        Add New
-      </button>
+      <button onClick={activateNewPlanView}>Add New</button>
       {content}
     </div>
   );

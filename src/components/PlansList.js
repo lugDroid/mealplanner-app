@@ -8,7 +8,7 @@ const PlansList = ({ plans }) => {
   } else {
     return (
       <div>
-        <p>List of plans</p>
+        <p>You have {plans.length} plans</p>
       </div>
     );
   }

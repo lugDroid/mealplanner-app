@@ -8,6 +8,7 @@ const WeeklyPlansTab = ({ meals, groups }) => {
   const [activeView, setActiveView] = useState("list");
   const [lunchPlan, setLunchPlan] = useState([]);
   const [dinnerPlan, setDinnerPlan] = useState([]);
+  const [plantoModify, setPlanToModify] = useState({});
 
   useEffect(() => {
     planService.getAllPlans().then((plans) => {
@@ -84,6 +85,14 @@ const WeeklyPlansTab = ({ meals, groups }) => {
     });
   };
 
+  const saveModifiedPlan = (plan) => {
+    console.log("Saving modified plan...");
+
+    planService.modifyPlan(plan.id, plan).then((returnedPlan) => {
+      setPlans(plans.map((p) => (p.id === plan.id ? returnedPlan : p)));
+    });
+  };
+
   const deletePlan = (id) => {
     const plan = plans.find((p) => p.id === id);
 
@@ -94,16 +103,43 @@ const WeeklyPlansTab = ({ meals, groups }) => {
     }
   };
 
+  const modifyPlan = (id) => {
+    const plan = plans.find((p) => p.id === id);
+
+    setActiveView("modify");
+    setPlanToModify(plan);
+    setLunchPlan(plan.lunch);
+    setDinnerPlan(plan.dinner);
+  };
+
   let content;
   switch (activeView) {
     case "list":
-      content = <PlansList plans={plans} deleteAction={deletePlan} />;
+      content = (
+        <PlansList
+          plans={plans}
+          deleteAction={deletePlan}
+          modifyAction={modifyPlan}
+        />
+      );
       break;
     case "new":
       content = (
         <WeeklyPlan
           closeView={() => setActiveView("list")}
+          plan={null}
           savePlan={saveNewPlan}
+          lunchPlan={lunchPlan}
+          dinnerPlan={dinnerPlan}
+        />
+      );
+      break;
+    case "modify":
+      content = (
+        <WeeklyPlan
+          closeView={() => setActiveView("list")}
+          plan={plantoModify}
+          savePlan={saveModifiedPlan}
           lunchPlan={lunchPlan}
           dinnerPlan={dinnerPlan}
         />

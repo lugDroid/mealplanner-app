@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-const WeeklyPlan = ({ closeView, savePlan, lunchPlan, dinnerPlan }) => {
-  const [planName, setPlanName] = useState("");
+const WeeklyPlan = ({ closeView, plan, savePlan, lunchPlan, dinnerPlan }) => {
+  const [planName, setPlanName] = useState(plan === null ? "" : plan.name);
   const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
   const handleInputChange = (event) => {
@@ -19,7 +19,12 @@ const WeeklyPlan = ({ closeView, savePlan, lunchPlan, dinnerPlan }) => {
 
   const addPlan = (event) => {
     event.preventDefault();
-    savePlan({ name: planName, lunch: lunchPlan, dinner: dinnerPlan });
+    savePlan({
+      name: planName,
+      lunch: lunchPlan,
+      dinner: dinnerPlan,
+      id: plan === null ? 0 : plan.id,
+    });
 
     closeView();
   };

@@ -1,4 +1,4 @@
-const PlansList = ({ plans, deleteAction }) => {
+const PlansList = ({ plans, deleteAction, modifyAction }) => {
   if (plans.length === 0) {
     return (
       <div>
@@ -14,6 +14,7 @@ const PlansList = ({ plans, deleteAction }) => {
             <li key={i}>
               <p>{p.name}</p>
               <button onClick={() => deleteAction(p.id)}>Delete</button>
+              <button onClick={() => modifyAction(p.id)}>Details</button>
             </li>
           ))}
         </ul>

@@ -84,10 +84,20 @@ const WeeklyPlansTab = ({ meals, groups }) => {
     });
   };
 
+  const deletePlan = (id) => {
+    const plan = plans.find((p) => p.id === id);
+
+    if (window.confirm(`Delete ${plan.name}?`)) {
+      planService.deletePlan(id).then(() => {
+        planService.getAllPlans().then((plans) => setPlans(plans));
+      });
+    }
+  };
+
   let content;
   switch (activeView) {
     case "list":
-      content = <PlansList plans={plans} />;
+      content = <PlansList plans={plans} deleteAction={deletePlan} />;
       break;
     case "new":
       content = (

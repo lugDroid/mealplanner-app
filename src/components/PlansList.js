@@ -1,4 +1,4 @@
-const PlansList = ({ plans }) => {
+const PlansList = ({ plans, deleteAction }) => {
   if (plans.length === 0) {
     return (
       <div>
@@ -6,13 +6,15 @@ const PlansList = ({ plans }) => {
       </div>
     );
   } else {
-    console.log(plans);
     return (
       <div>
         <p>You have {plans.length} plans</p>
         <ul>
           {plans.map((p, i) => (
-            <li key={i}>{p.name}</li>
+            <li key={i}>
+              <p>{p.name}</p>
+              <button onClick={() => deleteAction(p.id)}>Delete</button>
+            </li>
           ))}
         </ul>
       </div>

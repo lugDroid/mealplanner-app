@@ -78,6 +78,7 @@ const WeeklyPlansTab = ({ meals, groups }) => {
 
   const saveNewPlan = (plan) => {
     console.log("Saving plan...");
+    plan.id = Math.max(plans.map((p) => p.id)) + 1;
     planService.createPlan(plan).then((returnedPlan) => {
       setPlans(plans.concat(returnedPlan));
     });

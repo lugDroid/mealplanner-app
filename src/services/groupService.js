@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseUrl = "http://localhost:3001/groups";
+const baseUrl = "/api/groups";
 
 const getAllGroups = () => {
   const req = axios.get(baseUrl);

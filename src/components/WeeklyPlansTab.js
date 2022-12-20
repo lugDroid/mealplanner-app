@@ -38,7 +38,7 @@ const WeeklyPlansTab = ({ meals, groups }) => {
     for (let i = 0; i < 7; ) {
       const selectedMeal = getRandomMeal(meals, times);
       const selectedGroup = groupsUsed.find(
-        (g) => g.name === selectedMeal.group
+        (g) => g.name === selectedMeal.group.name
       );
 
       if (weeklyMeals.includes(selectedMeal))

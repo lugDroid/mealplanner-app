@@ -26,7 +26,7 @@ const MealList = ({
           .toLocaleLowerCase()
           .trim();
 
-        return m.group.toLocaleLowerCase().includes(filterText);
+        return m.group.name.toLocaleLowerCase().includes(filterText);
       });
     } else if (filter.startsWith(TIME_FILTER)) {
       return meals.filter((m) => {

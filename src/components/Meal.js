@@ -6,7 +6,7 @@ const Meal = ({ meal, deleteMeal, summaryView, modifyMeal }) => {
   } else {
     details = (
       <>
-        <p>Group: {meal.group}</p>
+        <p>Group: {meal.group.name}</p>
         <p>Time of Day: {meal.timeOfDay}</p>
         <p>Number of Days: {meal.numberOfDays}</p>
         <div>

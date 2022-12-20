@@ -6,7 +6,7 @@ const MealForm = ({ closeView, meal, meals, setMeals, groups }) => {
 
   const [mealName, setMealName] = useState(meal === null ? "" : meal.name);
   const [mealGroup, setMealGroup] = useState(
-    meal === null ? groups[0] : meal.group
+    meal === null ? groups[0].name : meal.group.name
   );
   const [mealTime, setMealTime] = useState(
     meal === null ? TIMES[0] : meal.timeOfDay

@@ -1,25 +1,40 @@
 import axios from "axios";
 const baseUrl = "/api/meals";
 
-const getAllMeals = () => {
-  const request = axios.get(baseUrl);
+let token = null;
+let config = null;
 
-  return request.then((res) => res.data);
+const setToken = newToken => {
+  token = `Bearer ${newToken}`;
+
+  config = {
+    headers: { Authorization: token },
+  };
 };
 
-const createMeal = (newMeal) => {
-  const request = axios.post(baseUrl, newMeal);
-  return request.then((res) => res.data);
+const removeToken = () => {
+  token = "";
+  config = {};
+}
+
+const getAllMeals = async () => {
+  const res = await axios.get(baseUrl, config);
+  return res.data;
 };
 
-const deleteMeal = (id) => {
-  const req = axios.delete(`${baseUrl}/${id}`);
-  return req.then((res) => res.data);
+const createMeal = async (newMeal) => {
+  const res = await axios.post(baseUrl, newMeal, config);
+  return res.data;
 };
 
-const modifyMeal = (id, meal) => {
-  const req = axios.put(`${baseUrl}/${id}`, meal);
-  return req.then((res) => res.data);
+const deleteMeal = async (id) => {
+  const res = await axios.delete(`${baseUrl}/${id}`, config);
+  return res.data;
+};
+
+const modifyMeal = async (id, meal) => {
+  const res = axios.put(`${baseUrl}/${id}`, meal, config);
+  return res.data;
 };
 
 const mealService = {
@@ -27,6 +42,8 @@ const mealService = {
   createMeal,
   deleteMeal,
   modifyMeal,
+  setToken,
+  removeToken,
 };
 
 export default mealService;

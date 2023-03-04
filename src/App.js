@@ -1,26 +1,107 @@
 import { useState, useEffect } from "react";
 import mealService from "./services/mealService";
 import groupService from "./services/groupService";
+import loginService from "./services/loginService";
 import WeeklyPlansTab from "./components/WeeklyPlansTab";
 import GroupsTab from "./components/GroupsTab";
 import MealsTab from "./components/MealsTab";
+import planService from "./services/planService";
 
 const App = () => {
   const [activeTab, setActiveTab] = useState("meals");
   const [meals, setMeals] = useState([]);
   const [groups, setGroups] = useState([]);
-  const [userName, setUserName] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    mealService.getAllMeals().then((initialMeals) => {
-      setMeals(initialMeals);
-    });
+    if (user !== null) {
+      const getMeals = async () => {
+        const initialMeals = await mealService.getAllMeals();
+        setMeals(initialMeals);
+      };
 
-    groupService.getAllGroups().then((groups) => {
-      setGroups(groups);
-    });
+      const getGroups = async () => {
+        const initialGroups = await groupService.getAllGroups();
+        setGroups(initialGroups);
+      }
+
+      getMeals();
+      getGroups();
+    }
+  }, [user]);
+
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem("mealPlannerAppUser");
+
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON);
+      setUser(user);
+
+      mealService.setToken(user.token);
+      groupService.setToken(user.token);
+      planService.setToken(user.token);
+    }
   }, []);
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+
+    try {
+      const user = await loginService.login({ username, password });
+
+      window.localStorage.setItem("mealPlannerAppUser", JSON.stringify(user));
+
+      mealService.setToken(user.token);
+      groupService.setToken(user.token);
+      planService.setToken(user.token);
+
+      setUser(user)
+      setUsername("");
+      setPassword("");
+    } catch (ex) {
+      console.log(ex.message)
+      console.log("Wrong credentials");
+    }
+  }
+
+  const handleLogout = async (event) => {
+    event.preventDefault();
+
+    window.localStorage.removeItem("mealPlannerAppUser");
+
+    mealService.removeToken();
+    groupService.removeToken();
+    planService.removeToken();
+
+    setUser(null);
+  }
+
+  const loginForm = () => {
+    return (
+      <form onSubmit={handleLogin}>
+        <div>
+          username
+          <input
+            type="text"
+            value={username}
+            name="Username"
+            onChange={({ target }) => setUsername(target.value)}
+          />
+        </div>
+        <div>
+          password
+          <input
+            type="password"
+            value={password}
+            name="Password"
+            onChange={({ target }) => setPassword(target.value)}
+          />
+        </div>
+        <button type="submit">login</button>
+      </form>)
+  }
 
   let tab;
 
@@ -38,39 +119,21 @@ const App = () => {
       tab = <MealsTab />;
   }
 
-  const handleLogin = (event) => {
-    event.preventDefault();
-    console.log("Loggin in with", userName, password);
+  const showTabs = () => {
+    return (
+      <div>
+        <p>{user.name} logged in <button onClick={handleLogout}>Log Out</button></p>
+        <button onClick={() => setActiveTab("meals")}>Meals</button>
+        <button onClick={() => setActiveTab("groups")}>Groups</button>
+        <button onClick={() => setActiveTab("weeklyPlans")}>Weekly Plans</button>
+        {tab}
+      </div>)
   }
 
   return (
     <div>
       <h1>Meal Planner</h1>
-      <form onSubmit={handleLogin}>
-        <div>
-          username
-          <input
-            type="text"
-            value={userName}
-            name="Username"
-            onChange={({ target }) => setUserName(target.value)}
-          />
-        </div>
-        <div>
-          password
-          <input
-            type="password"
-            value={password}
-            name="Password"
-            onChange={({ target }) => setPassword(target.value)}
-          />
-        </div>
-        <button type="submit">login</button>
-      </form>
-      <button onClick={() => setActiveTab("meals")}>Meals</button>
-      <button onClick={() => setActiveTab("groups")}>Groups</button>
-      <button onClick={() => setActiveTab("weeklyPlans")}>Weekly Plans</button>
-      {tab}
+      {user === null ? loginForm() : showTabs()}
     </div>
   );
 };

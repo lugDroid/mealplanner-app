@@ -11,9 +11,12 @@ const WeeklyPlansTab = ({ meals, groups }) => {
   const [plantoModify, setPlanToModify] = useState({});
 
   useEffect(() => {
-    planService.getAllPlans().then((plans) => {
+    const getPlans = async () => {
+      const plans = await planService.getAllPlans();
       setPlans(plans);
-    });
+    }
+
+    getPlans();
   }, []);
 
   const getRandomMeal = (meals, times) => {
@@ -35,7 +38,7 @@ const WeeklyPlansTab = ({ meals, groups }) => {
       return { timesUsed: 0, ...g };
     });
 
-    for (let i = 0; i < 7; ) {
+    for (let i = 0; i < 7;) {
       const selectedMeal = getRandomMeal(meals, times);
       const selectedGroup = groupsUsed.find(
         (g) => g.name === selectedMeal.group.name
@@ -46,7 +49,7 @@ const WeeklyPlansTab = ({ meals, groups }) => {
 
       if (
         selectedGroup.timesUsed + selectedMeal.numberOfDays <
-          selectedGroup.weeklyRations &&
+        selectedGroup.weeklyRations &&
         !weeklyMeals.includes(selectedMeal)
       ) {
         selectedGroup.timesUsed += selectedMeal.numberOfDays;

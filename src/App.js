@@ -5,6 +5,7 @@ import loginService from "./services/loginService";
 import WeeklyPlansTab from "./components/WeeklyPlansTab";
 import GroupsTab from "./components/GroupsTab";
 import MealsTab from "./components/MealsTab";
+import LoginForm from "./components/LoginForm";
 import planService from "./services/planService";
 
 const App = () => {
@@ -14,6 +15,7 @@ const App = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
+  const [loginVisible, setLoginVisible] = useState(false);
 
   useEffect(() => {
     if (user !== null) {
@@ -78,31 +80,6 @@ const App = () => {
     setUser(null);
   }
 
-  const loginForm = () => {
-    return (
-      <form onSubmit={handleLogin}>
-        <div>
-          username
-          <input
-            type="text"
-            value={username}
-            name="Username"
-            onChange={({ target }) => setUsername(target.value)}
-          />
-        </div>
-        <div>
-          password
-          <input
-            type="password"
-            value={password}
-            name="Password"
-            onChange={({ target }) => setPassword(target.value)}
-          />
-        </div>
-        <button type="submit">login</button>
-      </form>)
-  }
-
   let tab;
 
   switch (activeTab) {
@@ -128,6 +105,30 @@ const App = () => {
         <button onClick={() => setActiveTab("weeklyPlans")}>Weekly Plans</button>
         {tab}
       </div>)
+  }
+
+  const loginForm = () => {
+    const hideWhenVisible = { display: loginVisible ? 'none' : '' };
+    const showWhenVisible = { display: loginVisible ? '' : 'none' };
+
+    return (
+      <div>
+        <div style={hideWhenVisible}>
+          <button onClick={() => setLoginVisible(true)}>Log In</button>
+        </div>
+        <div style={showWhenVisible}>
+          <LoginForm
+            handleLogin={handleLogin}
+            setUsername={setUsername}
+            setPassword={setPassword}
+            username={username}
+            password={password}
+          />
+
+          <button onClick={() => setLoginVisible(false)}>Cancel</button>
+        </div>
+      </div>
+    )
   }
 
   return (

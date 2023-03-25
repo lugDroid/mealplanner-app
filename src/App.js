@@ -7,6 +7,7 @@ import GroupsTab from "./components/GroupsTab";
 import MealsTab from "./components/MealsTab";
 import LoginForm from "./components/LoginForm";
 import planService from "./services/planService";
+import Togglable from "./components/Togglable";
 
 const App = () => {
   const [activeTab, setActiveTab] = useState("meals");
@@ -15,7 +16,6 @@ const App = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
-  const [loginVisible, setLoginVisible] = useState(false);
 
   useEffect(() => {
     if (user !== null) {
@@ -108,26 +108,16 @@ const App = () => {
   }
 
   const loginForm = () => {
-    const hideWhenVisible = { display: loginVisible ? 'none' : '' };
-    const showWhenVisible = { display: loginVisible ? '' : 'none' };
-
     return (
-      <div>
-        <div style={hideWhenVisible}>
-          <button onClick={() => setLoginVisible(true)}>Log In</button>
-        </div>
-        <div style={showWhenVisible}>
-          <LoginForm
-            handleLogin={handleLogin}
-            setUsername={setUsername}
-            setPassword={setPassword}
-            username={username}
-            password={password}
-          />
-
-          <button onClick={() => setLoginVisible(false)}>Cancel</button>
-        </div>
-      </div>
+      <Togglable buttonLabel="Login">
+        <LoginForm
+          handleLogin={handleLogin}
+          setUsername={setUsername}
+          setPassword={setPassword}
+          username={username}
+          password={password}
+        />
+      </Togglable>
     )
   }
 
